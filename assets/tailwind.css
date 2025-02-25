@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    --error-border-color: rgb(243, 111, 111);
+    --error-bg-color: rgba(255, 0, 0, 0.1);
+  }
+  html {
+    font-family: "fira sans", Arial, Helvetica, sans-serif;
+  }
+}
+
+@layer utilities {
+  .error-animation {
+    outline: 1px solid var(--error-border-color);
+    background-color: var(--error-bg-color);
+    animation: shake 0.4s;
+  }
+
+  .error-label {
+    /* color: var(--error-color); */
+    color: red;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(5px);
+    }
+    50% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+@layer components {
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid lightgray;
+  }
+
+  summary::after {
+    content: "";
+    width: 12px;
+    height: 9px;
+    background: url("icon-arrow-details.svg");
+    background-size: cover;
+    margin-left: 0.75em;
+    transform: 0.2s;
+  }
+  details[open] > summary::after {
+    transform: rotate(180deg);
+  }
+}
