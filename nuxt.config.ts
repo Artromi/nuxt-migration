@@ -10,4 +10,10 @@ export default defineNuxtConfig({
     viewer: true,
     exposeConfig: false,
   },
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.BASE_URL,
+      tokenDuration: process.env.Token_Duration,
+    },
+  },
 });

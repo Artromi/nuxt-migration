@@ -7,7 +7,7 @@
       'bg-vologray-800': gray,
       'hover:bg-transparent': gray,
       'hover:text-vologray-800': gray,
-      'hover:border-vologray-800': gray
+      'hover:border-vologray-800': gray,
     }"
   >
     <slot></slot>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'ButtonStandard',
-  props: ['gray']
-}
+  name: "ButtonStandard",
+  props: ["gray"],
+};
 </script>
