@@ -25,12 +25,7 @@
 </template>
 
 <script setup>
-import ButtonStandard from "@/components/ButtonStandard.vue";
-// import ContainerModal from "@/components/ContainerModal.vue";
-// import VolunteerFormular from "@/components/VolunteerFormular.vue";
-import VolunteerTable from "../components/VolunteerTable.vue";
 import { useVolunteerStore } from "@/stores/VolunteerStore";
-import SearchBar from "@/components/SearchBar.vue";
 import debounce from "lodash.debounce";
 
 const router = useRouter();
@@ -39,11 +34,6 @@ const volunteerStore = useVolunteerStore();
 const newVolunteerModal = ref(false);
 const searchQuery = ref("");
 const debouncedSearchQuery = ref("");
-
-watch(searchQuery, (newValue) => {
-  router.push({ query: { search: newValue } });
-  debouncedSearch(newValue);
-});
 
 const debouncedSearch = debounce((input, searchFunction) => {
   searchFunction(input);
@@ -54,8 +44,13 @@ const redirectToCreatedVolunteer = (volunteerId) => {
   newVolunteerModal.value = false;
 };
 
+watch(searchQuery, (newValue) => {
+  router.push({ query: { search: newValue } });
+  debouncedSearch(newValue);
+});
+
 onMounted(() => {
-  debouncedSearchQuery = route.query.search || "";
-  searchQuery = debouncedSearchQuery.value;
+  debouncedSearchQuery.value = route.query.search || "";
+  searchQuery.value = debouncedSearchQuery.value;
 });
 </script>
