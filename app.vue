@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen overflow-hidden grid grid-cols-[70px,auto] divide-x">
+  <div class="grid grid-cols-[70px,auto] h-screen divide-x overflow-hidden">
     <NavigationBar />
     <NuxtPage />
   </div>
@@ -7,6 +7,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-const apiUrl = config.public.baseUrl;
-const token = config.public.tokenDuration;
+const baseUrl = config.public.baseUrl;
+const tokenDuration = config.public.tokenDuration;
 </script>

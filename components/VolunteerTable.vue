@@ -9,7 +9,7 @@
               v-for="(title, index) in tableHead"
               @click="sortVolunteersList(sortParameter[index])"
               :key="index"
-              class="pb-3 text-sm cursor-pointer pl-4"
+              class="text-sm cursor-pointer pb-3 pl-4"
               :class="{
                 'pl-4': index === 0,
                 'text-voloblue-200': sortBy === sortParameter[index],
@@ -28,7 +28,7 @@
                     ? '#0025FF'
                     : 'darkgray'
                 "
-                class="pl-2 inline w-5"
+                class="w-5 inline pl-2"
               />
             </td>
           </tr>
@@ -36,7 +36,7 @@
         <tbody class="bg-white">
           <tr
             v-for="(volunteer, index) of volunteerStore.volunteersPage.content"
-            class="border-b h-14 cursor-pointer hover:text-voloblue-100 hover:bg-gray-50"
+            class="border-b h-14 cursor-pointer hover:bg-gray-50 hover:text-voloblue-100"
             :key="volunteer.id"
             @click="goToDetails(volunteer.id)"
           >
@@ -64,7 +64,7 @@
               :class="{ 'rounded-tr-md ': index === 0 }"
             >
               <IconArrowGoto
-                class="text-voloblue-200 opacity-50 ml-auto mr-2"
+                class="text-voloblue-200 ml-auto mr-2 opacity-50"
               />
             </td>
           </tr>
@@ -82,16 +82,18 @@
     </div>
   </div>
   <!-- <ContainerModal v-if="volunteerStore.fetching" :delay="500">
-    <div class="p-4 flex flex-row gap-2 items-center text-md"><IconSpinner />loading ...</div>
+    <div class="flex flex-row p-4 text-md gap-2 items-center"><IconSpinner />loading ...</div>
   </ContainerModal> -->
 </template>
 
 <script setup>
 import { useVolunteerStore } from "@/stores/VolunteerStore";
+
+import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 
-const volunteerStore = useVolunteerStore();
 const router = useRouter();
+const volunteerStore = useVolunteerStore();
 
 const searchQuery = ref({ type: string, default: "" });
 const tableHead = ref([
@@ -115,8 +117,15 @@ const sortBy = ref("person.lastname");
 const page = ref(0);
 const pageSize = ref(15);
 
+const props = defineProps({
+  searchQuery: {
+    type: String,
+    default: "",
+  },
+});
+
 const goToDetails = (volunteerId) => {
-  router.push("/volunteerdetail" + volunteerId);
+  router.push({ path: `/volunteerdetail/${volunteerId}` });
 };
 
 const updateVolunteerPage = (pageNumber) => {
@@ -182,6 +191,6 @@ watch(
   async () => {
     await volunteerStore.getVolunteers();
   },
-  { immediate: true } // Ruft die Funktion direkt beim Mounten auf
+  { immediate: true }
 );
 </script>

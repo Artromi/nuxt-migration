@@ -12,12 +12,17 @@
     <IconSearch class="opacity-60" />
   </div>
 </template>
-<script setup>
-// props: {
-//   placeholder: String,
-//   modelValue: {
-//     type: String
-//   }
-// },
-// emits: ['update:modelValue']
+<script>
+import IconSearch from "../components/IconSearch.vue";
+
+export default {
+  components: { IconSearch },
+  props: {
+    placeholder: String,
+    modelValue: {
+      type: String,
+    },
+  },
+  emits: ["update:modelValue"],
+};
 </script>

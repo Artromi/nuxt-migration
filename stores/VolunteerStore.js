@@ -352,4 +352,34 @@ export const useVolunteerStore = defineStore("volunteerStore", () => {
     }
     return titles;
   };
+
+  return {
+    fetching,
+    volunteersPage,
+    volunteerNotes,
+    selectedVolunteer,
+    selectedVolunteerContacts,
+    selectedVolunteerAddresses,
+    selectedVolunteerRelevantContract,
+    volunteerDocuments,
+    volunteerDocumentTypes,
+    clearVolunteer,
+    setVolunteer,
+    getVolunteer,
+    getVolunteers,
+    getVolunteerNotes,
+    getVolunteerDocuments,
+    getVolunteerAddresses,
+    setVolunteerAddresses,
+    deleteVolunteerAddress,
+    setNote,
+    setDocument,
+    deleteNote,
+    editVolunteer,
+    editVolunteerAvatar,
+    deleteDocument,
+    getVolunteerDocumentTypes,
+    getTypeList,
+    getTitlesList,
+  };
 });

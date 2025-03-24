@@ -1,6 +1,6 @@
 <template>
   <main class="bg-vologray-100 overflow-auto">
-    <div class="max-w-7xl min-w-[900px] m-8">
+    <div class="m-8 max-w-7xl min-w-[900px]">
       <div class="flex justify-between gap-2">
         <SearchBar
           v-model="searchQuery"
@@ -30,7 +30,7 @@ import debounce from "lodash.debounce";
 
 const router = useRouter();
 const route = useRoute();
-const volunteerStore = useVolunteerStore();
+// const volunteerStore = useVolunteerStore();
 const newVolunteerModal = ref(false);
 const searchQuery = ref("");
 const debouncedSearchQuery = ref("");

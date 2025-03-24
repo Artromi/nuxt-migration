@@ -12,8 +12,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseUrl: process.env.BASE_URL,
-      tokenDuration: process.env.Token_Duration,
+      baseUrl: process.env.NUXT_BASE_URL,
+      tokenDuration: process.env.NUXT_Token_Duration,
     },
   },
 });
