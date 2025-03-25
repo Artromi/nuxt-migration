@@ -1,5 +1,5 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Setzt das Boxmodell, sodass Padding und Border den Gesamtwert nicht beeinflussen */
+  box-sizing: border-box;
 }

@@ -16,4 +16,8 @@ export default defineNuxtConfig({
       tokenDuration: process.env.NUXT_Token_Duration,
     },
   },
+  typescript: {
+    typeCheck: true,
+    // strict: false // kann während umstellung auf TS hilfreich sein auf false zu setzen (true ist default)
+  },
 });

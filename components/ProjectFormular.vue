@@ -4,7 +4,9 @@
     @keydown.esc="$emit('close')"
   >
     <header class="flex flex-col pt-5 px-5">
-      <h2 class="text-[20px] text-bold font-medium self-center">Neue Einsatzstelle</h2>
+      <h2 class="text-[20px] text-bold font-medium self-center">
+        Neue Einsatzstelle
+      </h2>
       <!-- tabnavigation -->
       <div class="mt-3 flex">
         <button
@@ -56,8 +58,9 @@
           <!-- left column -->
           <div class="flex-1">
             <p class="text-[13px] text-vologray-400 pe-2 md:pe-20">
-              Lege hier im ersten Schritt, die Einsatzstelle mit ein paar grundlegenden Daten an.
-              Alle weiteren Details kannst du im nächsten Schritt ergänzen.
+              Lege hier im ersten Schritt, die Einsatzstelle mit ein paar
+              grundlegenden Daten an. Alle weiteren Details kannst du im
+              nächsten Schritt ergänzen.
             </p>
           </div>
           <!-- right column -->
@@ -175,14 +178,18 @@
     >
       <IconSpinner />speichere daten...
     </div>
-    <footer class="flex justify-between p-6 border-solid border-t border-vologray-200">
-      <ButtonStandard @click.prevent="$emit('close')" :gray="true">Abbrechen</ButtonStandard>
+    <footer
+      class="flex justify-between p-6 border-solid border-t border-vologray-200"
+    >
+      <ButtonStandard @click.prevent="$emit('close')" :gray="true"
+        >Abbrechen</ButtonStandard
+      >
       <ButtonStandard
         type="submit"
         form="new-project"
         :class="{
           'bg-opacity-70 hover:bg-voloblue-200 hover:bg-opacity-70 hover:text-white hover:cursor-default':
-            isButtonDisabled
+            isButtonDisabled,
         }"
         >Einsatzstelle anlegen
       </ButtonStandard>
@@ -191,14 +198,14 @@
 </template>
 
 <script>
-import ButtonStandard from './ButtonStandard.vue'
-import { useProjectStore } from '@/stores/ProjectStore'
-import { useCountryStore } from '@/stores/CountryStore'
-import { isValidEmail, isValidPhoneNumber } from '@/utils/validations'
-import IconSpinner from '@/components/IconSpinner.vue'
-import FormularInput from './FormularInput.vue'
-import FormularTextarea from './FormularTextarea.vue'
-import FormularSelectBox from './FormularSelectBox.vue'
+import ButtonStandard from "./ButtonStandard.vue";
+import { useProjectStore } from "~/stores/ProjectStore";
+import { useCountryStore } from "@/stores/CountryStore";
+import { isValidEmail, isValidPhoneNumber } from "@/utils/validations";
+import IconSpinner from "@/components/IconSpinner.vue";
+import FormularInput from "./FormularInput.vue";
+import FormularTextarea from "./FormularTextarea.vue";
+import FormularSelectBox from "./FormularSelectBox.vue";
 
 export default {
   components: {
@@ -206,30 +213,30 @@ export default {
     IconSpinner,
     FormularInput,
     FormularTextarea,
-    FormularSelectBox
+    FormularSelectBox,
   },
   setup() {
-    const projectStore = useProjectStore()
-    const countryStore = useCountryStore()
+    const projectStore = useProjectStore();
+    const countryStore = useCountryStore();
     return {
       projectStore,
-      countryStore
-    }
+      countryStore,
+    };
   },
   data() {
     return {
       currentTab: 1,
       pageOneErr: false,
       formData: {
-        name: '',
-        shorthand: '',
+        name: "",
+        shorthand: "",
         description: null,
-        email: '',
-        phone: '',
-        street: '',
-        postalcode: '',
-        city: '',
-        country: 'Deutschland'
+        email: "",
+        phone: "",
+        street: "",
+        postalcode: "",
+        city: "",
+        country: "Deutschland",
       },
       validationErr: {
         name: false,
@@ -239,52 +246,52 @@ export default {
         postalcode: false,
         city: false,
         country: false,
-        shorthand: false
+        shorthand: false,
       },
       formValid: false,
       errorMessage: false,
-      successMessage: false
-    }
+      successMessage: false,
+    };
   },
   computed: {
     isButtonDisabled() {
       return (
-        this.formData.name === '' ||
-        this.formData.shorthand === '' ||
-        this.formData.email === '' ||
-        this.formData.phone === '' ||
-        this.formData.street === '' ||
-        this.formData.postalcode === '' ||
-        this.formData.city === '' ||
-        this.formData.country === ''
-      )
-    }
+        this.formData.name === "" ||
+        this.formData.shorthand === "" ||
+        this.formData.email === "" ||
+        this.formData.phone === "" ||
+        this.formData.street === "" ||
+        this.formData.postalcode === "" ||
+        this.formData.city === "" ||
+        this.formData.country === ""
+      );
+    },
   },
   methods: {
     validate() {
-      this.formValid = false
-      this.validationErr.name = false
-      this.validationErr.email = false
-      this.validationErr.phone = false
-      this.validationErr.street = false
-      this.validationErr.postalcode = false
-      this.validationErr.city = false
-      this.validationErr.country = false
-      this.validationErr.shorthand = false
+      this.formValid = false;
+      this.validationErr.name = false;
+      this.validationErr.email = false;
+      this.validationErr.phone = false;
+      this.validationErr.street = false;
+      this.validationErr.postalcode = false;
+      this.validationErr.city = false;
+      this.validationErr.country = false;
+      this.validationErr.shorthand = false;
 
-      if (!this.formData.name) this.validationErr.name = true
+      if (!this.formData.name) this.validationErr.name = true;
       if (!this.formData.email || !isValidEmail(this.formData.email))
-        this.validationErr.email = true
+        this.validationErr.email = true;
 
-      this.formData.phone = this.formData.phone.split(' ').join('')
+      this.formData.phone = this.formData.phone.split(" ").join("");
       if (!this.formData.phone || !isValidPhoneNumber(this.formData.phone))
-        this.validationErr.phone = true
+        this.validationErr.phone = true;
 
-      if (!this.formData.street) this.validationErr.street = true
-      if (!this.formData.postalcode) this.validationErr.postalcode = true
-      if (!this.formData.city) this.validationErr.city = true
-      if (!this.formData.country) this.validationErr.country = true
-      if (!this.formData.shorthand) this.validationErr.shorthand = true
+      if (!this.formData.street) this.validationErr.street = true;
+      if (!this.formData.postalcode) this.validationErr.postalcode = true;
+      if (!this.formData.city) this.validationErr.city = true;
+      if (!this.formData.country) this.validationErr.country = true;
+      if (!this.formData.shorthand) this.validationErr.shorthand = true;
 
       if (
         !this.validationErr.name &&
@@ -296,16 +303,16 @@ export default {
         !this.validationErr.country &&
         !this.validationErr.shorthand
       )
-        this.formValid = true
+        this.formValid = true;
     },
     async onSubmit() {
-      this.errorMessage = false
-      this.successMessage = false
-      this.validate()
+      this.errorMessage = false;
+      this.successMessage = false;
+      this.validate();
 
       if (this.formValid) {
         let project = {
-          organisationalId: 'null',
+          organisationalId: "null",
           name: this.formData.name,
           description: this.formData.description,
           email: this.formData.email,
@@ -314,33 +321,33 @@ export default {
           postalCode: this.formData.postalcode,
           city: this.formData.city,
           country: this.formData.country,
-          shorthand: this.formData.shorthand
-        }
+          shorthand: this.formData.shorthand,
+        };
 
         try {
-          await this.projectStore.setProject(project)
+          await this.projectStore.setProject(project);
         } catch (error) {
-          console.error(error)
+          console.error(error);
 
           // Showing error message just for 5 seconds
-          this.errorMessage = true
+          this.errorMessage = true;
           setTimeout(() => {
-            this.errorMessage = false
-          }, 5000)
-          return
+            this.errorMessage = false;
+          }, 5000);
+          return;
         }
-        this.$emit('close')
+        this.$emit("close");
         //
         // for redirect to new project detail page instead of just closing:
         // confetti()
         // this.$emit('saved', this.projectStore.selectedProject.id)
       }
-    }
+    },
   },
 
   mounted() {
-    this.$refs.name.focus()
-    this.countryStore.getCountries()
-  }
-}
+    this.$refs.name.focus();
+    this.countryStore.getCountries();
+  },
+};
 </script>

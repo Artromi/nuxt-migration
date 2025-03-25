@@ -45,7 +45,6 @@
             class="border-b h-14 cursor-pointer hover:text-voloblue-100 hover:bg-gray-50"
             v-for="(project, index) of projectStore.projectsPage.content"
             :key="project.id"
-            @click="goToDetails(project.id)"
           >
             <td
               class="font-bold pl-4 truncate"
@@ -88,14 +87,8 @@
   </ModalContainer> -->
 </template>
 
-<script setup>
-import { useProjectStore } from "@/stores/ProjectStore.js";
-// import { useRouter } from "vue-router";
-// import PaginationController from "@/components/PaginationController.vue";
-// import IconTableSortArrows from "./IconTableSortArrows.vue";
-// import IconArrowGoto from "./IconArrowGoto.vue";
-// import ModalContainer from "@/components/ContainerModal.vue";
-// import IconSpinner from "@/components/IconSpinner.vue";
+<script setup lang="ts">
+import { useProjectStore } from "~/stores/ProjectStore.js";
 
 const projectStore = useProjectStore();
 
@@ -110,61 +103,65 @@ const tableHead = ref([
 
 const sortParameter = ["name", "city", "email", "volunteers", "capacity"];
 
-const sortOrder = ref("asc");
-const sortBy = ref("name");
-const page = ref(0);
-const pageSize = ref(15);
+let sortOrder = ref<"asc" | "desc">("asc");
+let sortBy = ref<string>("person.lastname");
+let page = ref<number>(0);
+let pageSize = ref<number>(15);
 
-const props = defineProps({
-  searchQuery: {
-    type: String,
-    default: "",
-  },
-});
+interface Props {
+  searchQuery: string;
+}
+// const props = defineProps<{ searchQuery: string }>();
+const props = defineProps<Props>();
 
-const updateProjectListLenght = (length) => {
-  pageSize = length;
-  projectStore.projectsPage.pageable.pageNumber = 0;
+const updateProjectListLenght = (length: number): void => {
+  pageSize.value = length;
+  projectStore.projectsPage?.pageable.pageNumber ?? 0;
   let params = {
-    sortOrder: sortOrder,
-    sortBy: sortBy,
-    page: projectStore.projectsPage.pageable.pageNumber,
+    sortOrder: sortOrder.value,
+    sortBy: sortBy.value,
+    page: projectStore.projectsPage?.pageable.pageNumber ?? 0,
     pageSize: length,
   };
   projectStore.getProjects(params);
 };
 
-const updateProjectPage = (pageNumber) => {
+const updateProjectPage = (pageNumber: number): void => {
+  if (!projectStore.projectsPage) return;
+  if (!projectStore.projectsPage.pageable) return;
+
   projectStore.projectsPage.pageable.pageNumber = pageNumber;
+
   let params = {
-    sortOrder: sortOrder,
-    sortBy: sortBy,
+    sortOrder: sortOrder.value,
+    sortBy: sortBy.value,
     page: pageNumber,
-    pageSize: pageSize,
+    pageSize: pageSize.value,
   };
+
   projectStore.getProjects(params);
 };
 
-const sortProjectsList = (sortBy) => {
-  if (sortBy === sortBy) {
-    // Toggle sort order if the sortBy is the same
-    sortOrder = sortOrder === "asc" ? "desc" : "asc";
+const sortProjectsList = (sortKey: string): void => {
+  if (sortBy.value === sortKey) {
+    // Toggle sort order if sortBy is the same
+    sortOrder.value = sortOrder.value === "asc" ? "desc" : "asc";
   } else {
-    // Keep the current sort order when changing the sortBy
-    sortBy = sortBy;
+    // Keep the current sort order when changing sortBy
+    sortBy.value = sortKey;
   }
 
   getProjects();
 };
 
-const getProjects = async (params) => {
+const getProjects = async (params?: QueryObj): Promise<void> => {
   if (!params)
     params = {
       sortOrder: sortOrder.value,
       sortBy: sortBy.value,
       page: page.value,
       pageSize: pageSize.value,
-      search: searchQuery.value,
+      search: props.searchQuery,
     };
 
   try {
@@ -180,11 +177,11 @@ const getProjects = async (params) => {
   }
 };
 
-// watch(
-//   searchQuery.value,
-//   async () => {
-//     await projectStore.getProjects();
-//   },
-//   { immediate: true }
-// );
+watch(
+  () => props.searchQuery,
+  async () => {
+    await getProjects();
+  },
+  { immediate: true }
+);
 </script>
