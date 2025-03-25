@@ -104,15 +104,15 @@ const tableHead = ref([
 const sortParameter = ["name", "city", "email", "volunteers", "capacity"];
 
 let sortOrder = ref<"asc" | "desc">("asc");
-let sortBy = ref<string>("person.lastname");
+let sortBy = ref<string>("capacity");
 let page = ref<number>(0);
 let pageSize = ref<number>(15);
 
-interface Props {
-  searchQuery: string;
-}
-// const props = defineProps<{ searchQuery: string }>();
-const props = defineProps<Props>();
+// interface Props {
+//   searchQuery: string;
+// }
+const props = defineProps<{ searchQuery: string }>();
+// const props = defineProps<Props>();
 
 const updateProjectListLenght = (length: number): void => {
   pageSize.value = length;
